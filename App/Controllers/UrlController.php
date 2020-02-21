@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Illuminate\Database\Controllers;
+namespace App\Controllers;
 
 
 class UrlController
