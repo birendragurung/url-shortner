@@ -1,5 +1,8 @@
 <?php
 include 'vendor/autoload.php';
+include 'definitions.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -28,4 +31,7 @@ $psrRequest     = $psrHttpFactory->createRequest($symfonyRequest);
 
 /* @var \League\Route\Router $router */
 $router = include 'routes.php';
-$router->dispatch($psrRequest);
+$response = $router->dispatch($psrRequest);
+
+// send the response to the browser
+(new Laminas\HttpHandlerRunner\Emitter\SapiEmitter)->emit($response);
