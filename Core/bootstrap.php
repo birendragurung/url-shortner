@@ -37,7 +37,7 @@ try{
 	if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException){
 		$response = view('commons.error');
 	}
-	dd($exception);
+
 	$response = view('commons.500');
 }
 
