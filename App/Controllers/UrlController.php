@@ -4,32 +4,46 @@
 namespace App\Controllers;
 
 use App\Repositories\UrlRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Psr\Http\Message\ServerRequestInterface;
 
 class UrlController extends Controller
 {
-	private $request;
 
 	/**
-	 * @var \Illuminate\Database\App\Repositories\UrlRepository
+	 * @var \App\Repositories\UrlRepository
 	 */
 	private $urlRepository;
 
 	/**
 	 * UrlController constructor.
-	 *
-	 * @param $request
 	 */
-	public function __construct($request = NULL)
+	public function __construct()
 	{
-		$this->request = $request;
 		$this->urlRepository = new UrlRepository();
 	}
 
-	public function index()
+	public function index(ServerRequestInterface $request, $args)
 	{
-		$view = 'url/index';
-
 		$urls = $this->urlRepository->list();
-		return $this->view($view, ['urls' => $urls ]);
+		return $this->view('url.index', ['urls' => $urls ]);
+	}
+
+	public function store(ServerRequestInterface $request, $args)
+	{
+		$id = $args['id'];
+		dd($id);
+	}
+
+	public function visit(ServerRequestInterface $request, $args)
+	{
+		$tinyUrl = $args['tiny_url'];
+		$url = $this->urlRepository->findByTinyUrl($tinyUrl);
+		if (!$url){
+			throw new ModelNotFoundException;
+		}
+
+		$this->urlRepository->incrementVisit($url);
+		header('Location: ' . $url->url);
 	}
 }

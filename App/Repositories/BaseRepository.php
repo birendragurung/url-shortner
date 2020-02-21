@@ -12,7 +12,7 @@ abstract class BaseRepository implements RepositoryInterface
 	/**
 	 * @var \Illuminate\Database\Eloquent\Model
 	 */
-	private $model;
+	protected $model;
 
 	/**
 	 * BaseRepository constructor.

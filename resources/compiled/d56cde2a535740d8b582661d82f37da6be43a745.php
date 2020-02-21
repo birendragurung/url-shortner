@@ -1,0 +1,1 @@
+<?php /**PATH /home/birendra/Projects/test/url-shortener/resources/views/commons/footer.blade.php ENDPATH**/ ?>

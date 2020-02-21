@@ -21,5 +21,10 @@ function compiled_view_path()
 
 function url(string $path = '')
 {
-	return $_SERVER['HTTP_HOST'] . '/' . trim($path, " /\\\t\n\r\0\x0B");
+	return (isset($_SERVER['HTTPS']) ? 'https://' : 'http://'). $_SERVER['HTTP_HOST'] . '/' . trim($path, " /\\\t\n\r\0\x0B");
+}
+
+function route()
+{
+	return '';
 }
