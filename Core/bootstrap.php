@@ -31,7 +31,15 @@ $psrRequest     = $psrHttpFactory->createRequest($symfonyRequest);
 
 /* @var \League\Route\Router $router */
 $router = include 'routes.php';
-$response = $router->dispatch($psrRequest);
+try{
+	$response = $router->dispatch($psrRequest);
+} catch(\Exception $exception){
+	if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException){
+		$response = view('commons.error');
+	}
+	dd($exception);
+	$response = view('commons.500');
+}
 
 // send the response to the browser
 (new Laminas\HttpHandlerRunner\Emitter\SapiEmitter)->emit($response);

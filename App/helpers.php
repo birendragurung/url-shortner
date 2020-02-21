@@ -1,4 +1,8 @@
 <?php
+
+use Jenssegers\Blade\Blade;
+use Nyholm\Psr7\Response;
+
 function app_path()
 {
 	return __DIR__;
@@ -27,4 +31,15 @@ function url(string $path = '')
 function route()
 {
 	return '';
+}
+
+function view($path, $data = [], $merge = [])
+{
+	$blade = new Blade(realpath(VIEW_PATH), COMPILED_VIEW_PATH);
+
+	$view =  $blade->make($path, $data, $merge);
+
+	return new Response(200 , [
+		'Content-Type' => 'text/html'
+	] , $view->render() );
 }

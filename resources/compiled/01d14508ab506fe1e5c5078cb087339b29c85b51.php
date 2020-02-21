@@ -3,10 +3,10 @@
 <?php echo $__env->make('commons.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-    <?php echo $__env->make('commons.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('commons.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-    <?php echo $__env->make('commons.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-    <!-- Content Wrapper. Contains page content -->
+<?php echo $__env->make('commons.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <?php echo $__env->yieldContent('content'); ?>
     </div>

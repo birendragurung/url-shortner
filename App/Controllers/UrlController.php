@@ -29,10 +29,19 @@ class UrlController extends Controller
 		return $this->view('url.index', ['urls' => $urls ]);
 	}
 
+	public function create(ServerRequestInterface $request , $args)
+	{
+		return view('url.create');
+	}
+
 	public function store(ServerRequestInterface $request, $args)
 	{
-		$id = $args['id'];
-		dd($id);
+		$data = $request->getParsedBody();
+		$data['tiny_url'] = uniqid();
+
+		$url = $this->urlRepository->create($data);
+
+		return header('Location: ' . url('/urls'));
 	}
 
 	public function visit(ServerRequestInterface $request, $args)
@@ -45,5 +54,30 @@ class UrlController extends Controller
 
 		$this->urlRepository->incrementVisit($url);
 		header('Location: ' . $url->url);
+	}
+
+	public function delete(ServerRequestInterface $request , $args)
+	{
+		$id = $args['id'];
+		$this->urlRepository->delete($id);
+		header('Location: ' . url('/urls'));
+	}
+
+	public function edit(ServerRequestInterface $request , $args)
+	{
+		$id = $args['id'];
+
+		$url = $this->urlRepository->find($id);
+
+		return view('url.edit', ['url' => $url ]);
+	}
+
+	public function update(ServerRequestInterface $request , $args)
+	{
+		$id = $args['id'];
+
+		$url = $this->urlRepository->update($id , $request->getParsedBody());
+
+		header('Location: ' . url('urls'));
 	}
 }
